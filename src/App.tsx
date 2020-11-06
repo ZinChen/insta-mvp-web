@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PostList from './PostList'
-import { AppContext, appContextDefaultValue } from './types'
+import { AppContext, useAppContextValue } from './context'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
 
 function App() {
-  useEffect(() => {
-    fetch('http://localhost:3000/api/v1/posts')
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-  })
+  const appContextValue = useAppContextValue()
 
   return (
-    <AppContext.Provider value={appContextDefaultValue} >
+    <AppContext.Provider value={appContextValue} >
       <section className="container">
         <PostList />
       </section>
