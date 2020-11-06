@@ -1,7 +1,9 @@
 import React, { useContext } from 'react'
+import Pluralize from 'react-pluralize'
 import dayjs from 'dayjs'
 import PostComments from './PostComments'
 import { AppContext, usePostsLoading } from './context'
+import SortSelect from './SortSelect'
 
 function PostList() {
   const { posts } = useContext(AppContext)
@@ -10,9 +12,14 @@ function PostList() {
   return (
     <div className="section">
       <div className="column is-half is-offset-one-quarter">
+        <div className="level-right">
+          <SortSelect />
+        </div>
+      </div>
+      <div className="column is-half is-offset-one-quarter">
         {
           Array.isArray(posts) && posts.map(post => (
-            <div className="level pb-5 pt-5">
+            <div key={post.id} className="level pb-5 pt-5">
               <div className="card">
                 <div className="card-image">
                   <figure className="image is-4by3">
@@ -44,11 +51,21 @@ function PostList() {
                   </div>
                   <div className="level">
                     <div className="level-left">
-                      <a className="level-item" aria-label="like">
+                      <a className="level-item mr-1" aria-label="like">
                         <span className="icon">
                           <i className="fas fa-heart" aria-hidden="true" />
                         </span>
                       </a>
+                      {
+                        post.likesCount > 0 &&
+                        (
+                          <span className="lever-item">
+                            <small>
+                              <Pluralize singular={'like'} count={post.likesCount} />
+                            </small>
+                          </span>
+                        )
+                      }
                     </div>
                   </div>
                 </div>

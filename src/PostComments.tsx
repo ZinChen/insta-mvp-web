@@ -11,7 +11,7 @@ const PostComments: React.FC<PostCommentProps> = ({ comments }) => {
     <div className="box">
       {
         comments.map(comment => (
-          <article className="media">
+          <article key={comment.id} className="media">
             <div className="media-left">
               <figure className="image is-64x64">
                 <img src={comment.userPhoto} />

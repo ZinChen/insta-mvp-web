@@ -4,7 +4,8 @@ import { AppContextData, Post } from './types'
 export const appContextDefaultValue: AppContextData = {
   posts: [],
   isLoading: false,
-  fetchPosts: () => null
+  fetchPosts: () => null,
+  sortPosts: () => null
 }
 
 export const AppContext = React.createContext<AppContextData>(appContextDefaultValue)
@@ -25,10 +26,26 @@ export function useAppContextValue(): AppContextData {
       })
   }, [setPosts])
 
+  const sortPosts = useCallback((type: string) => {
+    if (type === 'createdAt') {
+      setPosts(
+        [...posts].sort(
+          (a, b) => (new Date(b[type]) as any) - (new Date(a[type]) as any)
+        )
+      )
+    } else {
+      setPosts(
+        [...posts].sort((a, b) => b[type] - a[type])
+      )
+    }
+
+  }, [setPosts, posts])
+
   return {
     posts,
     isLoading,
-    fetchPosts
+    fetchPosts,
+    sortPosts,
   }
 }
 
