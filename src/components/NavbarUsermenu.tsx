@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { AppContext } from '../context'
 
 function NavbarUsermenu() {
-  const { user, logout } = useContext(AppContext)
+  const { user, logout, setModal } = useContext(AppContext)
 
   return (
     <div className="navbar-item has-dropdown is-hoverable">
@@ -16,6 +16,9 @@ function NavbarUsermenu() {
         <span>{user.email}</span>
       </a>
       <div className="navbar-dropdown">
+        <a className="navbar-item" onClick={() => setModal('createPost')}>
+          Create post
+        </a>
         <a className="navbar-item" onClick={() => logout()}>
           Logout
         </a>

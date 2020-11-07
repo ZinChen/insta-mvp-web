@@ -15,3 +15,11 @@ code {
 .navbar-item .navbar-link img {
   max-height: none;
 }
+
+.post-card {
+  width: 100%;
+}
+
+.comment-box {
+  width: 100%;
+}

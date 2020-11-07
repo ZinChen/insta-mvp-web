@@ -6,6 +6,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import Navbar from './components/Navbar'
 import ModalLogin from './components/ModalLogin'
 import ModalSignup from './components/ModalSignup'
+import ModalPostForm from './components/ModalPostForm'
 
 dayjs.extend(relativeTime)
 
@@ -17,6 +18,7 @@ function App() {
       <Navbar />
       <ModalLogin />
       <ModalSignup />
+      <ModalPostForm />
       <section className="container">
         <PostList />
       </section>

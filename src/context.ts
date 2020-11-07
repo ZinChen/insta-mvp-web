@@ -169,8 +169,49 @@ export function useAppContextValue(): AppContextData {
     }
   }, [setModal, user, setUser, posts, setPosts])
 
-  const createComment = () => null
-  const createPost = () => null
+  const createComment = useCallback((comment: string, postId: number) => {
+    const authenticationToken: string = localStorage.getItem('authenticationToken')
+    fetch('http://localhost:3000/api/v1/create_comment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authenticationToken
+      },
+      body: JSON.stringify({ comment, post_id: postId })
+    })
+    .then(response => response.json())
+    .then(response => {
+      if (response.comment) {
+        const post = posts.find(post => post.id === postId)
+        post.comments.push(response.comment)
+        setPosts([
+          ...posts
+        ])
+      }
+    })
+  }, [posts, setPosts])
+
+  const createPost = useCallback((image: string, comment: string) => {
+    const authenticationToken: string = localStorage.getItem('authenticationToken')
+    fetch('http://localhost:3000/api/v1/create_post', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authenticationToken
+      },
+      body: JSON.stringify({ image, comment })
+    })
+    .then(response => response.json())
+    .then(response => {
+      if (response.post) {
+        setPosts([
+          response.post,
+          ...posts
+        ])
+        setModal('')
+      }
+    })
+  }, [posts, setPosts, setModal])
 
   return {
     user,

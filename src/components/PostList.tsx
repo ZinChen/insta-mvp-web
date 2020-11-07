@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import PostComments from './PostComments'
 import { AppContext, usePostsLoading } from '../context'
 import SortSelect from './SortSelect'
+import PostCommentForm from './PostCommentForm'
 
 function PostList() {
   const { posts, user, onPostLike } = useContext(AppContext)
@@ -24,7 +25,7 @@ function PostList() {
         {Array.isArray(posts) &&
           posts.map((post) => (
             <div key={post.id} className="level pb-5 pt-5">
-              <div className="card">
+              <div className="card post-card">
                 <div className="card-image">
                   <figure className="image is-4by3">
                     <img src={post.imageUrl} />
@@ -77,7 +78,16 @@ function PostList() {
                 </div>
 
                 <div className="card-footer">
-                  <PostComments comments={post.comments} />
+                  <div className="box comment-box">
+                    {
+                      post.comments.length > 0 &&
+                      <PostComments comments={post.comments} />
+                    }
+                    {
+                      user.email.length > 0 &&
+                      <PostCommentForm postId={post.id} />
+                    }
+                  </div>
                 </div>
               </div>
             </div>
