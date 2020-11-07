@@ -1,6 +1,6 @@
 import React from 'react'
 import dayjs from 'dayjs'
-import { PostComment } from './types'
+import { PostComment } from '../types'
 
 interface PostCommentProps {
   comments: PostComment[]
