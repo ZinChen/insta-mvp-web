@@ -3,26 +3,26 @@ import { AppContext } from '../context'
 import generateImageUrl from '../lib/imageGenerator'
 
 function ModalPostForm() {
-  const { modal, clearModal, createPost } = useContext(AppContext)
+  const { modal, setModal, createPost } = useContext(AppContext)
   const [image, setImage] = useState('')
   const [comment, setComment] = useState('')
 
-  const setData = () => null
-
   useEffect(() => {
     setImage(generateImageUrl())
-  }, [setImage])
+  }, [])
 
   const onClose = useCallback(() => {
-    setData()
-    clearModal()
+    setModal('')
     setImage(generateImageUrl())
-  }, [setData, clearModal, setImage])
+    setComment('')
+  }, [setModal])
 
   const onSubmit = useCallback((image: string, comment: string) => {
     createPost(image, comment)
-    setData()
-  }, [setData, createPost])
+    setImage(generateImageUrl())
+    setComment('')
+    setModal('')
+  }, [setModal, createPost])
 
   const isActive: String = modal === 'createPost' ? 'is-active' : ''
 
@@ -31,7 +31,7 @@ function ModalPostForm() {
       <div className="modal-background" />
       <div className="modal-content">
         <div className="box">
-          <figure className="image is-square">
+          <figure className="image is-4by3">
             <img src={image} alt=""/>
           </figure>
           <div className="content is-clearfix mt-4">

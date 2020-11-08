@@ -208,7 +208,6 @@ export function useAppContextValue(): AppContextData {
           response.post,
           ...posts
         ])
-        setModal('')
       }
     })
   }, [posts, setPosts, setModal])
