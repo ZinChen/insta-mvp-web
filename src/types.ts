@@ -5,6 +5,7 @@ export interface Post {
   createdAt: string
   userName: string
   userPhoto: string
+  userId: number
   likesCount: number
   commentsCount: number
   comments: PostComment[]
@@ -17,6 +18,7 @@ export interface PostComment {
   createdAt: string
   userName: string
   userPhoto: string
+  userId: number
 }
 
 export interface PostLike {
@@ -53,7 +55,7 @@ export interface AppContextData {
   isLoading: boolean
   modal: string
   setModal: (modal: string) => void
-  fetchPosts: () => void
+  fetchPosts: (user?: string) => void
   sortPosts: (type: string) => void
   login: (user: UserData) => void
   signup: (user: UserData) => void

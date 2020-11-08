@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import { AppContext } from '../context'
 import NavbarSignButtons from './NavbarSignButtons'
 import NavbarUsermenu from './NavbarUsermenu'
@@ -17,9 +18,9 @@ function Navbar() {
       </div>
       <div id="navbar" className="navbar-menu">
         <div className="navbar-start">
-          <a href="/" className="navbar-item">
+          <Link to="/" className="navbar-item">
             Neinstagram
-          </a>
+          </Link>
         </div>
         <div className="navbar-end">
         {

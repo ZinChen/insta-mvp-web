@@ -1,8 +1,15 @@
-import React, { useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 import { AppContext } from '../context'
 
 function NavbarUsermenu() {
   const { user, logout, setModal } = useContext(AppContext)
+  // Redirect to '/' on logout
+  const history = useHistory()
+  const onLogout = useCallback(() => {
+    logout()
+    history.push('/')
+  }, [history, logout])
 
   return (
     <div className="navbar-item has-dropdown is-hoverable">
@@ -19,7 +26,7 @@ function NavbarUsermenu() {
         <a className="navbar-item" onClick={() => setModal('createPost')}>
           Create post
         </a>
-        <a className="navbar-item" onClick={() => logout()}>
+        <a className="navbar-item" onClick={() => onLogout()}>
           Logout
         </a>
       </div>

@@ -1,4 +1,5 @@
 import React, { useCallback, useContext } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import Pluralize from 'react-pluralize'
 import dayjs from 'dayjs'
 import PostComments from './PostComments'
@@ -8,7 +9,8 @@ import PostCommentForm from './PostCommentForm'
 
 function PostList() {
   const { posts, user, onPostLike } = useContext(AppContext)
-  usePostsLoading()
+  const postsUser = useParams().postsUser
+  usePostsLoading(postsUser)
 
   const likedClass = useCallback((postId: number) =>
     user.postLikes.includes(postId) ? 'has-text-danger' :'has-text-grey-lighter'
@@ -16,6 +18,11 @@ function PostList() {
 
   return (
     <div className="section">
+      { postsUser && posts.length > 0 &&
+        <div className="title has-text-centered">
+          Posts by {posts[0].userName}
+        </div>
+      }
       <div className="column is-half is-offset-one-quarter">
         <div className="level-right">
           <SortSelect />
@@ -34,12 +41,16 @@ function PostList() {
                 <div className="card-content">
                   <div className="media">
                     <div className="media-left">
-                      <figure className="image is-48x48">
-                        <img src={post.userPhoto} />
-                      </figure>
+                      <Link to={`/${post.userId}`}>
+                        <figure className="image is-48x48">
+                          <img src={post.userPhoto} />
+                        </figure>
+                      </Link>
                     </div>
                     <div className="media-content">
-                      <p className="title is-4">{post.userName}</p>
+                      <Link to={`/${post.userId}`}>
+                        <p className="title is-4">{post.userName}</p>
+                      </Link>
                       <p className="subtitle is-6">
                         @{post.userName.replace(/\s/g, "").toLocaleLowerCase()}
                       </p>

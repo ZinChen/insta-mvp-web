@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserRouter, Route } from 'react-router-dom'
 import PostList from './components/PostList'
 import { AppContext, useAppContextValue } from './context'
 import dayjs from 'dayjs'
@@ -15,13 +16,16 @@ function App() {
 
   return (
     <AppContext.Provider value={appContextValue} >
-      <Navbar />
-      <ModalLogin />
-      <ModalSignup />
-      <ModalPostForm />
-      <section className="container">
-        <PostList />
-      </section>
+      <BrowserRouter>
+        <Navbar />
+        <ModalLogin />
+        <ModalSignup />
+        <ModalPostForm />
+        <section className="container">
+          <Route path="/:postsUser?" component={PostList} />
+          {/* <PostList /> */}
+        </section>
+      </BrowserRouter>
     </AppContext.Provider>
   )
 }

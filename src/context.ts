@@ -15,7 +15,7 @@ export const appContextDefaultValue: AppContextData = {
   logout: () => null,
   onPostLike: () => null,
   createPost: () => null,
-  createComment: () => null
+  createComment: () => null,
 }
 
 export const AppContext = React.createContext<AppContextData>(appContextDefaultValue)
@@ -26,9 +26,11 @@ export function useAppContextValue(): AppContextData {
   const [modal, setModal] = useState('')
   const [user, setUser] = useState<User>(appContextDefaultValue.user)
 
-  const fetchPosts = useCallback(() => {
+  const fetchPosts = useCallback((postsUser?: string) => {
     setIsLoading(true)
-    fetch('http://localhost:3000/api/v1/posts')
+    const params = postsUser ? `?user_id=${postsUser}` : ''
+
+    fetch('http://localhost:3000/api/v1/posts' + params)
       .then((response) => response.json())
       .then((data) => {
         setPosts(data.posts)
@@ -230,10 +232,10 @@ export function useAppContextValue(): AppContextData {
   }
 }
 
-export function usePostsLoading() {
+export function usePostsLoading(postsUser: string) {
   const { fetchPosts } = useContext(AppContext)
 
   useEffect(() => {
-    fetchPosts()
-  }, [fetchPosts])
+    fetchPosts(postsUser)
+  }, [fetchPosts, postsUser])
 }

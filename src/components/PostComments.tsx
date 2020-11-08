@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { PostComment } from '../types'
 
@@ -12,17 +13,23 @@ const PostComments: React.FC<PostCommentProps> = ({ comments }) => {
       {comments.map((comment) => (
         <article key={comment.id} className="media">
           <div className="media-left">
-            <figure className="image is-64x64">
-              <img src={comment.userPhoto} />
-            </figure>
+            <Link className="has-text-grey-dark" to={`${comment.userId}`}>
+              <figure className="image is-64x64">
+                <img src={comment.userPhoto} />
+              </figure>
+            </Link>
           </div>
           <div className="media-content">
             <div className="content">
               <p>
-                <strong>{comment.userName}</strong>{" "}
-                <small>
-                  @{comment.userName.replace(/\s/g, "").toLocaleLowerCase()}
-                </small>{" "}
+                <Link className="has-text-grey-dark" to={`${comment.userId}`}>
+                  <strong>{comment.userName}</strong>
+                  {" "}
+                  <small>
+                    @{comment.userName.replace(/\s/g, "").toLocaleLowerCase()}
+                  </small>
+                </Link>
+                {" "}
                 <small>{dayjs(comment.createdAt).fromNow()}</small>
                 <br />
                 {comment.content}
