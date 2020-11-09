@@ -1,6 +1,6 @@
-# Built with with Create React App
+Built with with Create React App
 
-## **Context API** used ad store
+## **Context API** used as store
 
 ```\src\context.ts```
 
