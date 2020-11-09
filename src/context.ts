@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { apiHost } from './config'
 import { AppContextData, Post, User, UserData } from './types'
 
 export const appContextDefaultValue: AppContextData = {
@@ -30,7 +31,7 @@ export function useAppContextValue(): AppContextData {
     setIsLoading(true)
     const params = postsUser ? `?user_id=${postsUser}` : ''
 
-    fetch('http://localhost:3000/api/v1/posts' + params)
+    fetch(apiHost + '/api/v1/posts' + params)
       .then((response) => response.json())
       .then((data) => {
         setPosts(data.posts)
@@ -62,7 +63,7 @@ export function useAppContextValue(): AppContextData {
 
   const login = useCallback((userData: UserData) => {
     setIsLoading(true)
-    fetch('http://localhost:3000/api/v1/login', {
+    fetch(apiHost + '/api/v1/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -100,7 +101,7 @@ export function useAppContextValue(): AppContextData {
 
   const signup = useCallback((userData: UserData) => {
     setIsLoading(true)
-    fetch('http://localhost:3000/api/v1/signup', {
+    fetch(apiHost + '/api/v1/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -143,7 +144,7 @@ export function useAppContextValue(): AppContextData {
   const onPostLike = useCallback((postId: number) => {
     if (user.email.length > 0) {
       const authenticationToken: string = localStorage.getItem('authenticationToken')
-      fetch('http://localhost:3000/api/v1/post_like', {
+      fetch(apiHost + '/api/v1/post_like', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -173,7 +174,7 @@ export function useAppContextValue(): AppContextData {
 
   const createComment = useCallback((comment: string, postId: number) => {
     const authenticationToken: string = localStorage.getItem('authenticationToken')
-    fetch('http://localhost:3000/api/v1/create_comment', {
+    fetch(apiHost + '/api/v1/create_comment', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -195,7 +196,7 @@ export function useAppContextValue(): AppContextData {
 
   const createPost = useCallback((image: string, comment: string) => {
     const authenticationToken: string = localStorage.getItem('authenticationToken')
-    fetch('http://localhost:3000/api/v1/create_post', {
+    fetch(apiHost + '/api/v1/create_post', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -212,7 +213,7 @@ export function useAppContextValue(): AppContextData {
         ])
       }
     })
-  }, [posts, setPosts, setModal])
+  }, [posts, setPosts])
 
   return {
     user,
