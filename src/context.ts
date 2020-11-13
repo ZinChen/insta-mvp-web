@@ -30,6 +30,25 @@ export function useAppContextValue(): AppContextData {
   const fetchPosts = useCallback((postsUser?: string) => {
     setIsLoading(true)
     const params = postsUser ? `?user_id=${postsUser}` : ''
+    const authenticationToken: string = localStorage.getItem('authenticationToken')
+
+    authenticationToken && fetch(apiHost + '/api/v1/user', {
+      headers: {
+        'Authorization': 'Bearer ' + authenticationToken
+      }
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        const {user = {}} = response
+        setUser({
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          photo: user.photo,
+          postLikes: user.postLikes,
+          errors: undefined
+        })
+      })
 
     fetch(apiHost + '/api/v1/posts' + params)
       .then((response) => response.json())
@@ -138,6 +157,7 @@ export function useAppContextValue(): AppContextData {
 
   const logout = useCallback(() => {
     setUser(appContextDefaultValue.user)
+    localStorage.removeItem('authenticationToken')
     fetchPosts()
   }, [setUser, fetchPosts])
 
